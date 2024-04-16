@@ -18,10 +18,11 @@ class InputData(BaseModel):
 
 
 @app.post("/settyl-predict/")
-def calculate_value(input_data: InputData):
+def predict_internal_status(input_data: InputData):
     processed_data = input_data.external_status
-    predicted_value, accuracy, precision, recall = PRE_PROCESS().predict_internal_status(processed_data)
-    return {"internal_status": predicted_value, "accuracy": accuracy, "precision": precision, "recall": recall}
+    predicted_value, f1score, accuracy, precision, recall = PRE_PROCESS().predict_internal_status([processed_data])
+    return {"internal_status": predicted_value, "f1score": f1score, "accuracy": accuracy, "precision": precision,
+            "recall": recall}
 
 
 if __name__ == "__main__":

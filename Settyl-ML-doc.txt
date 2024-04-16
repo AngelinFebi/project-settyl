@@ -1,0 +1,67 @@
+API:
+    -> Using FastApi by creating api schema with POST method
+    -> URL :- http://127.0.0.1:5000/settyl-predict/
+    -> Getting input of externalStatus as type json
+        eg:-
+            {
+                "external_status": "Gate in"
+            }
+    -> Passing the value of json to the function "predict_internal_status"
+    -> Returning output as JSON
+        eg:-
+            {
+                "internal_status": "Gate In",
+                "f1score": 0.9833,
+                "accuracy": 0.9837,
+                "precision": 0.9848,
+                "recall": 0.9837
+            }
+
+PRE_PROCESS:
+    -> Using packages of "pandas, numpy, sklearn" for pre_process and as well as for ML prediction
+    -> Initialized a class "PRE_PROCESS" which holds all pre-processing and predict functions
+    -> Used SKLEARN versatile machine learning library
+        PRE_PROCESS:
+            ==> "__init__":
+                * Initialized all common variables as self.{variable} to inherit the class
+                * Handled input for unit test and for prediction
+
+            ==> "data_preprocessing":
+                * Here I used one-hot encoding to encode the data_set for ML
+                * To make trained model, fetch training variable's from the data_set with "sklearn.train_test_split"
+                * Returned "model, f1score, accuracy, precision, recall"
+
+            ==> "load_model":
+                * The "load_model" function to load the created model if it exists
+                * Else it will dump a new trained model with "data_preprocessing"
+
+            ==> "predict_internal_status":
+                * Gets externalStatus from API and predict the internalStatus from the model
+                * Returns "predicted, f1score, accuracy, precision, recall"
+
+            ==> "one_hot_encoding":
+                * This transforms a specified column in a DataFrame into multiple binary columns
+                * For each unique category (one-hot encoding), and then removes the original column.
+                * It uses a helper function to create these new columns, merges them back into the main DataFrame
+                * Returns the updated DataFrame.
+
+TESTING:
+    -> Giving mock data for testing as
+        ::: [
+                {
+                    'externalStatus': 'A',
+                    'internalStatus': 'X'
+                },
+                {
+                    'externalStatus': 'B',
+                    'internalStatus': 'Y'
+                },
+                {
+                    'externalStatus': 'C',
+                    'internalStatus': 'Z'
+                }
+            ]
+    -> Test output:
+        Ran 1 test in 0.005s
+        
+        PASS OK
